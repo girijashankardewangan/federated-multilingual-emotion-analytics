@@ -109,6 +109,18 @@ def local_train(model, loader, device, epochs, lr, max_norm,
                 p.requires_grad = True
         print("FedSVD: A frozen, B trainable")
 
+    # Pooler freeze: PEFT attaches LoRA to pooler.dense, but our forward()
+    # uses last_hidden_state[:, 0] and never invokes the pooler.
+    # The unused pooler LoRA-B param gets no gradient, causing Opacus
+    # to crash with "Per sample gradient is not initialized".
+    pooler_frozen = 0
+    for name, p in model.named_parameters():
+        if 'pooler' in name and p.requires_grad:
+            p.requires_grad = False
+            pooler_frozen += 1
+    if pooler_frozen:
+        print(f"Pooler frozen: {pooler_frozen} params (unused in forward)")
+
     engine = None
     if use_hybrid_dp:
         model, optimizer, loader, engine = make_hybrid_private(
@@ -205,6 +217,12 @@ def main(args):
         for lang in args.languages:
             fairbatch.group_weights[lang] = 1.0
         print(f"[FairBatch] Initialized with languages: {args.languages}")
+
+    # ============ VRAM INSTRUMENTATION START ============
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats()
+        print(f"[VRAM] Reset | Initial: {torch.cuda.memory_allocated()/1e9:.2f} GB")
+    # ========================================================
 
     for round_num in range(start_round, args.rounds):
         print(f"\n{'='*60}")
@@ -313,6 +331,14 @@ def main(args):
     results_path = os.path.join(results_dir, f"{args.experiment_name}_metrics.csv")
     pd.DataFrame(all_metrics).to_csv(results_path, index=False)
     print(f"\nFinal metrics: {results_path}")
+    # ============ VRAM INSTRUMENTATION END ============
+    if torch.cuda.is_available():
+        peak_gb = torch.cuda.max_memory_allocated() / (1024 ** 3)
+        reserved_gb = torch.cuda.max_memory_reserved() / (1024 ** 3)
+        print(f"[VRAM] Peak allocated: {peak_gb:.2f} GB")
+        print(f"[VRAM] Peak reserved:  {reserved_gb:.2f} GB")
+    # ========================================================
+
     print("PAPER 3 TRAINING COMPLETE!")
 
 
