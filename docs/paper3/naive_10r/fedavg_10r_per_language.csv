@@ -1,0 +1,6 @@
+seed,language,test_macro_f1
+42,chn,0.7872
+42,deu,0.7232
+42,eng,0.7902
+42,esp,0.8562
+42,hin,0.8802

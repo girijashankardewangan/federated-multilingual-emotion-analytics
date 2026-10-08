@@ -1,0 +1,49 @@
+{
+  "method": "FedAvg",
+  "seeds_available": [
+    42
+  ],
+  "note": "This is an interim seed-42 archive. Do not interpret this as a completed five-seed aggregate.",
+  "seed42": {
+    "paper": "Paper 3",
+    "method": "FedAvg",
+    "variant": "naive_10r",
+    "seed": 42,
+    "model": "xlm-roberta-base",
+    "lora_rank": 32,
+    "lora_alpha": 64,
+    "languages": [
+      "eng",
+      "hin",
+      "deu",
+      "esp",
+      "chn"
+    ],
+    "clients": 5,
+    "rounds": 10,
+    "local_epochs": 2,
+    "batch_size": 8,
+    "max_length": 64,
+    "learning_rate": 0.0002,
+    "dirichlet_alpha": 0.5,
+    "max_grad_norm": 1.0,
+    "train_records": 24912,
+    "validation_records": 5338,
+    "test_records": 5339,
+    "test_macro_f1": 0.8209,
+    "test_micro_f1": 0.8222,
+    "validation_macro_f1": 0.8132,
+    "validation_micro_f1": 0.816,
+    "test_per_language_macro_f1": {
+      "chn": 0.7872,
+      "deu": 0.7232,
+      "eng": 0.7902,
+      "esp": 0.8562,
+      "hin": 0.8802
+    },
+    "elapsed_minutes": 77.27,
+    "source_drive": "/content/drive/MyDrive/paper3_fairdp_xlm/production_10r/fedavg/seed42",
+    "checkpoint_policy": "Large .pt checkpoints remain on Google Drive.",
+    "created_at": "2026-10-08T19:22:22.500257"
+  }
+}
