@@ -1,0 +1,382 @@
+Command: /usr/bin/python3 -u /content/federated-multilingual-emotion-analytics/federated-distilbert-prototype/run_paper3.py --model_name xlm-roberta-base --use_lora --lora_r 32 --lora_alpha 64 --languages eng hin deu esp chn --clients 5 --rounds 10 --local_epochs 2 --batch_size 8 --max_length 64 --lr 2e-4 --dirichlet_alpha 0.5 --seed 42 --use_fedsvd --max_grad_norm 1.0 --checkpoint_dir /content/drive/MyDrive/paper3_fairdp_xlm/production_10r/fedsvd/seed42/checkpoints --experiment_name fedsvd_10r_seed42
+
+[Seed] Global RNG seed set to 42
+Device: cuda
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+10/09/2026 05:33:45:WARNING:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading BRIGHTER: ['eng', 'hin', 'deu', 'esp', 'chn']
+
+Generating train split:   0%|          | 0/2764 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 2764/2764 [00:00<00:00, 93143.85 examples/s]
+
+Generating dev split:   0%|          | 0/230 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 230/230 [00:00<00:00, 75650.09 examples/s]
+
+Generating test split:   0%|          | 0/5528 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 5528/5528 [00:00<00:00, 956364.98 examples/s]
+
+Generating train split:   0%|          | 0/2556 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 2556/2556 [00:00<00:00, 378446.80 examples/s]
+
+Generating dev split:   0%|          | 0/200 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 200/200 [00:00<00:00, 59790.51 examples/s]
+
+Generating test split:   0%|          | 0/2020 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 2020/2020 [00:00<00:00, 426138.92 examples/s]
+
+Generating train split:   0%|          | 0/2603 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 2603/2603 [00:00<00:00, 352504.63 examples/s]
+
+Generating dev split:   0%|          | 0/400 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 400/400 [00:00<00:00, 126601.39 examples/s]
+
+Generating test split:   0%|          | 0/5208 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 5208/5208 [00:00<00:00, 653540.43 examples/s]
+
+Generating train split:   0%|          | 0/1996 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 1996/1996 [00:00<00:00, 514524.66 examples/s]
+
+Generating dev split:   0%|          | 0/368 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 368/368 [00:00<00:00, 140522.93 examples/s]
+
+Generating test split:   0%|          | 0/3390 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 3390/3390 [00:00<00:00, 855774.33 examples/s]
+
+Generating train split:   0%|          | 0/2642 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 2642/2642 [00:00<00:00, 425518.44 examples/s]
+
+Generating dev split:   0%|          | 0/400 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 400/400 [00:00<00:00, 134724.29 examples/s]
+
+Generating test split:   0%|          | 0/5284 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 5284/5284 [00:00<00:00, 789663.73 examples/s]
+Train: 24912, Val: 5338, Test: 5339
+Test languages: {np.str_('chn'): np.int64(1275), np.str_('deu'): np.int64(1230), np.str_('eng'): np.int64(1225), np.str_('esp'): np.int64(871), np.str_('hin'): np.int64(738)}
+Val languages:  {np.str_('chn'): np.int64(1276), np.str_('deu'): np.int64(1215), np.str_('eng'): np.int64(1299), np.str_('esp'): np.int64(862), np.str_('hin'): np.int64(686)}
+Client sizes: [3300, 4789, 3461, 8990, 4372]
+
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 199/199 [00:00<00:00, 4250.02it/s]
+[transformers] [1mXLMRobertaModel LOAD REPORT[0m from: xlm-roberta-base
+Key                       | Status     |  | 
+--------------------------+------------+--+-
+lm_head.dense.bias        | UNEXPECTED |  | 
+lm_head.dense.weight      | UNEXPECTED |  | 
+lm_head.bias              | UNEXPECTED |  | 
+lm_head.layer_norm.bias   | UNEXPECTED |  | 
+lm_head.layer_norm.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+trainable params: 5,357,568 || all params: 283,401,216 || trainable%: 1.8905
+Shared init: LoRA-A matrices orthonormal initialized
+[Checkpoint] None found. Starting fresh.
+[VRAM] Reset | Initial: 1.13 GB
+
+============================================================
+ROUND 1/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.4216, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.3105, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.3558, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.3506, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.4001, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 1 done in 455.5s
+  Val:  macro=0.1822, micro=0.2219
+  Test: macro=0.1849, micro=0.2230
+    chn: macro=0.1052, n=1275
+    deu: macro=0.0767, n=1230
+    eng: macro=0.1428, n=1225
+    esp: macro=0.1295, n=871
+    hin: macro=0.0092, n=738
+[Checkpoint] Round 0 saved
+
+============================================================
+ROUND 2/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.2505, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.2271, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.2702, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.2720, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.2312, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 2 done in 459.1s
+  Val:  macro=0.6925, micro=0.6996
+  Test: macro=0.6983, micro=0.7060
+    chn: macro=0.6190, n=1275
+    deu: macro=0.4609, n=1230
+    eng: macro=0.5984, n=1225
+    esp: macro=0.7680, n=871
+    hin: macro=0.7979, n=738
+[Checkpoint] Round 1 saved
+
+============================================================
+ROUND 3/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.2111, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1938, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.2325, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.2269, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1978, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 3 done in 451.4s
+  Val:  macro=0.7327, micro=0.7390
+  Test: macro=0.7352, micro=0.7422
+    chn: macro=0.6542, n=1275
+    deu: macro=0.5480, n=1230
+    eng: macro=0.6648, n=1225
+    esp: macro=0.7952, n=871
+    hin: macro=0.8203, n=738
+[Checkpoint] Round 2 saved
+
+============================================================
+ROUND 4/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.1946, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1720, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.2115, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.1970, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1728, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 4 done in 456.3s
+  Val:  macro=0.7529, micro=0.7569
+  Test: macro=0.7539, micro=0.7578
+    chn: macro=0.6994, n=1275
+    deu: macro=0.5577, n=1230
+    eng: macro=0.6949, n=1225
+    esp: macro=0.8140, n=871
+    hin: macro=0.8301, n=738
+[Checkpoint] Round 3 saved
+
+============================================================
+ROUND 5/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.1774, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1572, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.1963, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.1703, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1574, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 5 done in 456.0s
+  Val:  macro=0.7596, micro=0.7635
+  Test: macro=0.7613, micro=0.7651
+    chn: macro=0.7142, n=1275
+    deu: macro=0.5823, n=1230
+    eng: macro=0.7009, n=1225
+    esp: macro=0.8217, n=871
+    hin: macro=0.8434, n=738
+[Checkpoint] Round 4 saved
+
+============================================================
+ROUND 6/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.1665, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1440, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.1850, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.1517, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1473, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 6 done in 454.0s
+  Val:  macro=0.7656, micro=0.7680
+  Test: macro=0.7665, micro=0.7696
+    chn: macro=0.7105, n=1275
+    deu: macro=0.6096, n=1230
+    eng: macro=0.7177, n=1225
+    esp: macro=0.8133, n=871
+    hin: macro=0.8450, n=738
+[Checkpoint] Round 5 saved
+
+============================================================
+ROUND 7/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.1556, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1326, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.1716, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.1321, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1362, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 7 done in 453.4s
+  Val:  macro=0.7749, micro=0.7795
+  Test: macro=0.7785, micro=0.7831
+    chn: macro=0.7297, n=1275
+    deu: macro=0.6336, n=1230
+    eng: macro=0.7285, n=1225
+    esp: macro=0.8257, n=871
+    hin: macro=0.8570, n=738
+[Checkpoint] Round 6 saved
+
+============================================================
+ROUND 8/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.1486, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1244, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.1655, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.1214, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1265, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 8 done in 457.0s
+  Val:  macro=0.7803, micro=0.7829
+  Test: macro=0.7771, micro=0.7794
+    chn: macro=0.7354, n=1275
+    deu: macro=0.6250, n=1230
+    eng: macro=0.7318, n=1225
+    esp: macro=0.8191, n=871
+    hin: macro=0.8554, n=738
+[Checkpoint] Round 7 saved
+
+============================================================
+ROUND 9/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.1404, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1147, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.1535, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.1080, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1180, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 9 done in 461.9s
+  Val:  macro=0.7838, micro=0.7869
+  Test: macro=0.7848, micro=0.7868
+    chn: macro=0.7282, n=1275
+    deu: macro=0.6402, n=1230
+    eng: macro=0.7520, n=1225
+    esp: macro=0.8275, n=871
+    hin: macro=0.8538, n=738
+[Checkpoint] Round 8 saved
+
+============================================================
+ROUND 10/10
+============================================================
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 0: n=3300, loss=0.1346, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 1: n=4789, loss=0.1099, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 2: n=3461, loss=0.1477, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 3: n=8990, loss=0.0969, eps=None
+FedSVD: A frozen, B trainable
+Pooler frozen: 1 params (unused in forward)
+  Client 4: n=4372, loss=0.1129, eps=None
+[FedSVD] Server-side SVD applied
+
+Round 10 done in 456.1s
+  Val:  macro=0.7888, micro=0.7916
+  Test: macro=0.7933, micro=0.7954
+    chn: macro=0.7242, n=1275
+    deu: macro=0.6705, n=1230
+    eng: macro=0.7583, n=1225
+    esp: macro=0.8344, n=871
+    hin: macro=0.8645, n=738
+[Checkpoint] Round 9 saved
+
+Final metrics: /content/drive/MyDrive/paper3_fairdp_xlm/production_10r/fedsvd/seed42/checkpoints/../results/fedsvd_10r_seed42_metrics.csv
+[VRAM] Peak allocated: 10.04 GB
+[VRAM] Peak reserved:  10.31 GB
+PAPER 3 TRAINING COMPLETE!
+
+Return code: 0
+Elapsed minutes: 89.02

@@ -1,0 +1,12 @@
+{
+  "README.md": "ea344efde6cd586c0bf9059ffc2472cc2890ac3534eb528ad3939c758c1f41cb",
+  "fedsvd_10r_seed42_per_language.csv": "9294eef601d77fc86d0bb3d7b141239765a0fe89ae605302769d14588ca5df96",
+  "fedsvd_10r_seed42_summary.json": "f950b959a9fb3e8daf79751b33b56bfa775d4d22750edc188f56b2c8161c3e64",
+  "matched_comparison_seed42.csv": "0eae839ca86d202b607e57d8c7682020ceb11159bcffa84f505de7ea76702ee6",
+  "seed42/fedsvd_10r_seed42_history.json": "84d703b4a265e4321a11007406e3a963401afe9d2aa09062d9d761aa9626a45f",
+  "seed42/fedsvd_10r_seed42_log.txt": "42afef3dcc3994e66ff826ed654fe85a407f5d71a58938d2be90009b738829f4",
+  "seed42/fedsvd_10r_seed42_metrics.csv": "47ceaf75196cf82728723b720bcd76c703f77bc45611f933e4a6f58ccc2a653a",
+  "source_snapshot/run_paper3.py": "45e9230489e7f3b720ccfe5a2cd0cb7a16abe9beb7e4dd8c22d804559c9df26a",
+  "source_snapshot/xlm_roberta.py": "70c2e69b7f5deb90ff4387c628bc2b3b7d88f529d70d4471ef116977147dc61c",
+  "table_matched_seed42.tex": "3e4f088a8fb5a1c64b8e59f0814a7ee3b2eb914b307203d134032cb8fbaa2a7b"
+}

@@ -1,0 +1,3 @@
+seed,rounds,method,test_macro_f1,test_micro_f1,source_note
+42,10,FedAvg,0.8209,0.8222,Previously archived FedAvg seed42 run
+42,10,FedSVD,0.7933,0.7954,Fresh shared-initialization FedSVD run
