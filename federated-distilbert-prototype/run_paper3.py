@@ -166,7 +166,7 @@ def main(args):
 
     print(f"Loading BRIGHTER: {args.languages}")
     train_df, val_df, test_df = build_custom_split(
-        configs=args.languages, seed=args.seed,
+        configs=args.languages, seed=args.split_seed,
         train_fraction=0.70, validation_fraction=0.15)
     print(f"Train: {len(train_df)}, Val: {len(val_df)}, Test: {len(test_df)}")
 
@@ -184,7 +184,7 @@ def main(args):
     print(f"Val languages:  {dict(zip(*np.unique(val_languages, return_counts=True)))}")
 
     client_dfs = dirichlet_partition(df=train_df, labels=LABELS_5,
-                                     clients=args.clients, alpha=args.dirichlet_alpha, seed=args.seed)
+                                     clients=args.clients, alpha=args.dirichlet_alpha, seed=args.partition_seed)
     print(f"Client sizes: {[len(c) for c in client_dfs]}")
 
     global_model = XLMRMultiLabel(
@@ -213,10 +213,29 @@ def main(args):
     # FairBatch initialization (Paper 4 fairness base)
     fairbatch = None
     if args.use_fairbatch:
-        fairbatch = FederatedFairBatch(alpha=0.05, protected_attr="language")
+        fairbatch = FederatedFairBatch(alpha=0.2, protected_attr="language")
         for lang in args.languages:
             fairbatch.group_weights[lang] = 1.0
         print(f"[FairBatch] Initialized with languages: {args.languages}")
+
+    # Restore saved FairBatch weights and RNG before the next round.
+    if ckpt is not None:
+        if fairbatch is not None:
+            saved_weights = ckpt.get("fairbatch_group_weights")
+            if saved_weights:
+                fairbatch.group_weights.update(saved_weights)
+                print(
+                    "[Checkpoint] FairBatch weights restored:",
+                    fairbatch.group_weights,
+                    flush=True,
+                )
+            else:
+                print(
+                    "[Checkpoint] No FairBatch weights found in checkpoint.",
+                    flush=True,
+                )
+        cm.restore_rng_state(ckpt)
+
 
     # ============ VRAM INSTRUMENTATION START ============
     if torch.cuda.is_available():
@@ -287,39 +306,28 @@ def main(args):
             global_model, val_loader, device,
             languages=val_languages, labels=LABELS_5
         )
-        test_macro, test_micro, test_per_lang = evaluate(
-            global_model, test_loader, device,
-            languages=test_languages, labels=LABELS_5
-        )
         elapsed = time.time() - t0
 
         metrics = {
             "round": round_num,
             "val_macro_f1": round(val_macro, 4),
             "val_micro_f1": round(val_micro, 4),
-            "test_macro_f1": round(test_macro, 4),
-            "test_micro_f1": round(test_micro, 4),
             "epsilon": round(round_eps, 4) if round_eps else None,
-            "per_language_test": json.dumps({str(k): v for k, v in test_per_lang.items()}) if test_per_lang else "{}",
             "elapsed_sec": round(elapsed, 1),
         }
         all_metrics.append(metrics)
 
         print(f"\nRound {round_num + 1} done in {elapsed:.1f}s")
         print(f"  Val:  macro={val_macro:.4f}, micro={val_micro:.4f}")
-        print(f"  Test: macro={test_macro:.4f}, micro={test_micro:.4f}")
-        if test_per_lang:
-            for lang, r in sorted(test_per_lang.items()):
-                print(f"    {lang}: macro={r['macro_f1']:.4f}, n={r['n_samples']}")
 
-            if args.use_fairbatch and fairbatch is not None:
-                per_lang_f1 = {str(k): v['macro_f1'] for k, v in val_per_lang.items()}
-                fairbatch.update_from_f1(per_lang_f1)
-                print(f"[FairBatch] Updated (val) weights: {fairbatch.group_weights}")
+        if args.use_fairbatch and fairbatch is not None:
+            per_lang_f1 = {str(k): v['macro_f1'] for k, v in val_per_lang.items()}
+            fairbatch.update_from_f1(per_lang_f1)
+            print(f"[FairBatch] Updated (val) weights: {fairbatch.group_weights}")
         if round_eps:
             print(f"  Epsilon: {round_eps:.4f}")
 
-        cm.save(round_num=round_num, model=global_model, metrics=metrics)
+        cm.save(round_num=round_num, model=global_model, metrics=metrics, fairbatch=fairbatch)
 
         # Free memory between rounds
         import gc
@@ -328,9 +336,88 @@ def main(args):
 
     results_dir = os.path.join(args.checkpoint_dir, "..", "results")
     os.makedirs(results_dir, exist_ok=True)
-    results_path = os.path.join(results_dir, f"{args.experiment_name}_metrics.csv")
-    pd.DataFrame(all_metrics).to_csv(results_path, index=False)
-    print(f"\nFinal metrics: {results_path}")
+
+    # Final test is evaluated once, after the training loop.
+    final_test_macro, final_test_micro, final_test_per_lang = evaluate(
+        global_model, test_loader, device,
+        languages=test_languages, labels=LABELS_5
+    )
+
+    checkpoint_round_index = max(
+        int(start_round) - 1,
+        int(args.rounds) - 1
+    )
+
+    final_test = {
+        "experiment_name": args.experiment_name,
+        "model_name": args.model_name,
+        "seed": int(args.seed),
+        "rounds_requested": int(args.rounds),
+        "checkpoint_round_index_zero_based": checkpoint_round_index,
+        "test_macro_f1": round(float(final_test_macro), 4),
+        "test_micro_f1": round(float(final_test_micro), 4),
+        "per_language_test": {
+            str(k): v for k, v in final_test_per_lang.items()
+        } if final_test_per_lang else {}
+    }
+
+    def _json_safe(value):
+        if hasattr(value, "item"):
+            return value.item()
+        return str(value)
+
+    final_test_json_path = os.path.join(
+        results_dir, f"{args.experiment_name}_final_test.json"
+    )
+    final_test_csv_path = os.path.join(
+        results_dir, f"{args.experiment_name}_final_test.csv"
+    )
+
+    with open(final_test_json_path, "w", encoding="utf-8") as f:
+        json.dump(final_test, f, indent=2, default=_json_safe)
+
+    pd.DataFrame([{
+        "experiment_name": args.experiment_name,
+        "model_name": args.model_name,
+        "seed": int(args.seed),
+        "rounds_requested": int(args.rounds),
+        "checkpoint_round_index_zero_based": checkpoint_round_index,
+        "test_macro_f1": final_test["test_macro_f1"],
+        "test_micro_f1": final_test["test_micro_f1"],
+        "per_language_test": json.dumps(
+            final_test["per_language_test"], default=_json_safe
+        ),
+    }]).to_csv(final_test_csv_path, index=False)
+
+    print("\n[Final test — evaluated once after training]")
+    print(f"  Macro-F1: {final_test['test_macro_f1']:.4f}")
+    print(f"  Micro-F1: {final_test['test_micro_f1']:.4f}")
+    print(f"  JSON: {final_test_json_path}")
+    print(f"  CSV:  {final_test_csv_path}")
+
+    results_path = os.path.join(
+        results_dir, f"{args.experiment_name}_metrics.csv"
+    )
+
+    if all_metrics and int(start_round) == 0:
+        pd.DataFrame(all_metrics).to_csv(results_path, index=False)
+        print(f"Per-round validation metrics: {results_path}")
+    elif all_metrics:
+        segment_path = os.path.join(
+            results_dir,
+            f"{args.experiment_name}_metrics_resumed_from_round_"
+            f"{int(start_round) + 1}.csv"
+        )
+        pd.DataFrame(all_metrics).to_csv(segment_path, index=False)
+        print(
+            "[Resume] Wrote only newly completed round metrics; "
+            f"left the existing master CSV untouched: {segment_path}"
+        )
+    else:
+        print(
+            "[Resume] No new round metrics to write; "
+            "existing per-round CSV was not overwritten."
+        )
     # ============ VRAM INSTRUMENTATION END ============
     if torch.cuda.is_available():
         peak_gb = torch.cuda.max_memory_allocated() / (1024 ** 3)
@@ -344,7 +431,7 @@ def main(args):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
-    p.add_argument("--model_name", default="distilbert-base-uncased")
+    p.add_argument("--model_name", default="xlm-roberta-base")
     p.add_argument("--use_lora", action="store_true")
     p.add_argument("--lora_r", type=int, default=8)
     p.add_argument("--lora_alpha", type=int, default=16)
@@ -367,5 +454,19 @@ if __name__ == "__main__":
     p.add_argument("--target_delta", type=float, default=1e-5)
     p.add_argument("--checkpoint_dir", default="/content/drive/MyDrive/paper3_fairdp_xlm/checkpoints")
     p.add_argument("--experiment_name", default="paper3_smoke")
+    p.add_argument("--split-seed", "--split_seed", dest="split_seed", type=int, default=42, help="Fixed benchmark split seed.")
+    p.add_argument("--partition-seed", "--partition_seed", dest="partition_seed", type=int, default=42, help="Fixed client partition seed.")
     args = p.parse_args()
+
+    # Reproducibility: seed all RNGs before model/data creation
+    import random
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(args.seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    print(f"[Seed] Global RNG seed set to {args.seed}")
+
     main(args)

@@ -1,0 +1,48 @@
+{
+  "experiment": "fedavg_10r_seed42_finalprotocol_20261009_133222",
+  "method": "FedAvg",
+  "seed": 42,
+  "split_seed": 42,
+  "partition_seed": 42,
+  "model": "xlm-roberta-base",
+  "languages": [
+    "eng",
+    "hin",
+    "deu",
+    "esp",
+    "chn"
+  ],
+  "clients": 5,
+  "client_sizes": [
+    3300,
+    4789,
+    3461,
+    8990,
+    4372
+  ],
+  "train_records": 24912,
+  "validation_records": 5338,
+  "test_records": 5339,
+  "rounds": 10,
+  "local_epochs": 2,
+  "batch_size": 8,
+  "max_length": 64,
+  "learning_rate": 0.0002,
+  "dirichlet_alpha": 0.5,
+  "lora_rank": 32,
+  "lora_alpha": 64,
+  "dp_enabled": false,
+  "fairbatch_enabled": false,
+  "final_test_macro_f1": 0.823,
+  "final_test_micro_f1": 0.8238,
+  "compact_restore_test": {
+    "status": "PASS",
+    "max_absolute_logit_difference": 9.5367431640625e-07,
+    "sample_text": "I feel happy and hopeful today."
+  },
+  "full_checkpoint_not_included": true,
+  "base_encoder_download": "xlm-roberta-base from Hugging Face",
+  "raw_dataset_included": false,
+  "source_base_commit": "19fadae5e5c348e86b9637bbb9a070f4839fb7f1",
+  "archived_branch": "paper3-archive-20261009_161248"
+}

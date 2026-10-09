@@ -1,0 +1,79 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 1237,
+      "sha256": "516080360b247019490e786176305b17d34cd010f8be8503e55dc55264de8a0b"
+    },
+    {
+      "path": "adapter/README.md",
+      "size_bytes": 5156,
+      "sha256": "b69e2e74776d8b72d4ce8ecb6f2097f6b047f22a432a5b8038de55be133b22ad"
+    },
+    {
+      "path": "adapter/adapter_config.json",
+      "size_bytes": 1125,
+      "sha256": "75aa4fe97199644f8c5afc33fecc0ec8fc67f4ae09605b4e7f52d138f9430f7b"
+    },
+    {
+      "path": "adapter/adapter_model.safetensors",
+      "size_bytes": 21450056,
+      "sha256": "f7ea509f74b6d51e645cef5b623a58fb2550a32c4244fc5965f268c2662af91e"
+    },
+    {
+      "path": "classifier.pt",
+      "size_bytes": 17213,
+      "sha256": "015cd2da5dbc865ef237c92ab4f24baffc4e2ce5f0c5047c2a591b547acd56ce"
+    },
+    {
+      "path": "environment.json",
+      "size_bytes": 307,
+      "sha256": "08a0d3c8a769d97910462e5effe606011d88622b0a3bd78aacefb61f6a4c5217"
+    },
+    {
+      "path": "evidence/final_test.csv",
+      "size_bytes": 3836,
+      "sha256": "31f484e64cc4ffc56aede4fc933c5a07faab9f49d530de56935c389bc44da159"
+    },
+    {
+      "path": "evidence/final_test.json",
+      "size_bytes": 5252,
+      "sha256": "42d5d9dcb43017d153b3a67679dde039ba2792bde4d20e71fd6ff141443f1682"
+    },
+    {
+      "path": "evidence/round_metrics.csv",
+      "size_bytes": 281,
+      "sha256": "c4ee6358cef3015835fb35d58fa5762ab3a508118f561c22b0d61a42b4b6c3a6"
+    },
+    {
+      "path": "evidence/training.log",
+      "size_bytes": 10947,
+      "sha256": "73835a70f1034e85f9f51f488ebbc8c6c0b77110ecad370a16578d1cc57e3c76"
+    },
+    {
+      "path": "experiment_metadata.json",
+      "size_bytes": 1139,
+      "sha256": "40819af3ebf43f17f2514c72e8993bd7fcdbc1d456e8c75fc21bf06ac9da070c"
+    },
+    {
+      "path": "research_identity.json",
+      "size_bytes": 509,
+      "sha256": "a429cf439b306745bd2c8c0148ea9266a67813716abefe888451ce2e2b5054aa"
+    },
+    {
+      "path": "source_snapshot/models/xlm_roberta.py",
+      "size_bytes": 2822,
+      "sha256": "70c2e69b7f5deb90ff4387c628bc2b3b7d88f529d70d4471ef116977147dc61c"
+    },
+    {
+      "path": "source_snapshot/run_paper3.py",
+      "size_bytes": 19106,
+      "sha256": "f250c66f05b067decf4bab881eed7b089380a2847f0ffa7f989d5200f94f1f00"
+    },
+    {
+      "path": "source_snapshot/utils/checkpoint.py",
+      "size_bytes": 4541,
+      "sha256": "691ad0d50fe75c87e1151a2f8830937deca349e21b96aff8952a9ff39cca53da"
+    }
+  ]
+}

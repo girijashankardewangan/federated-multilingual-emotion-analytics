@@ -27,12 +27,12 @@ class XLMRMultiLabel(nn.Module):
             encoder = get_peft_model(encoder, lora_config)
             encoder.print_trainable_parameters()
 
-            if use_fedsvd:
-                with torch.no_grad():
-                    for name, param in encoder.named_parameters():
-                        if 'lora_A' in name and param.dim() == 2:
-                            torch.nn.init.orthogonal_(param)
-                print("FedSVD: A matrix orthonormal initialized")
+            # Shared initialization for a fair FedAvg/FedSVD comparison
+            with torch.no_grad():
+                for name, param in encoder.named_parameters():
+                    if 'lora_A' in name and param.dim() == 2:
+                        torch.nn.init.orthogonal_(param)
+            print("Shared init: LoRA-A matrices orthonormal initialized")
 
         self.encoder = encoder
         self.dropout = nn.Dropout(dropout)

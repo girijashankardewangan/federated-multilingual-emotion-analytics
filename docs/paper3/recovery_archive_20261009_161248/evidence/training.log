@@ -1,0 +1,253 @@
+[Seed] Global RNG seed set to 42
+Device: cuda
+Loading BRIGHTER: ['eng', 'hin', 'deu', 'esp', 'chn']
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+10/09/2026 13:32:35:WARNING:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Generating train split:   0%|          | 0/2556 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 2556/2556 [00:00<00:00, 374310.99 examples/s]
+
+Generating dev split:   0%|          | 0/200 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 200/200 [00:00<00:00, 72666.39 examples/s]
+
+Generating test split:   0%|          | 0/2020 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 2020/2020 [00:00<00:00, 481774.94 examples/s]
+
+Generating train split:   0%|          | 0/2603 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 2603/2603 [00:00<00:00, 378511.07 examples/s]
+
+Generating dev split:   0%|          | 0/400 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 400/400 [00:00<00:00, 125728.54 examples/s]
+
+Generating test split:   0%|          | 0/5208 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 5208/5208 [00:00<00:00, 660676.14 examples/s]
+
+Generating train split:   0%|          | 0/1996 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 1996/1996 [00:00<00:00, 520377.35 examples/s]
+
+Generating dev split:   0%|          | 0/368 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 368/368 [00:00<00:00, 139519.47 examples/s]
+
+Generating test split:   0%|          | 0/3390 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 3390/3390 [00:00<00:00, 870923.10 examples/s]
+
+Generating train split:   0%|          | 0/2642 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 2642/2642 [00:00<00:00, 452891.58 examples/s]
+
+Generating dev split:   0%|          | 0/400 [00:00<?, ? examples/s]
+Generating dev split: 100%|██████████| 400/400 [00:00<00:00, 141855.21 examples/s]
+
+Generating test split:   0%|          | 0/5284 [00:00<?, ? examples/s]
+Generating test split: 100%|██████████| 5284/5284 [00:00<00:00, 768284.48 examples/s]
+Train: 24912, Val: 5338, Test: 5339
+Test languages: {np.str_('chn'): np.int64(1275), np.str_('deu'): np.int64(1230), np.str_('eng'): np.int64(1225), np.str_('esp'): np.int64(871), np.str_('hin'): np.int64(738)}
+Val languages:  {np.str_('chn'): np.int64(1276), np.str_('deu'): np.int64(1215), np.str_('eng'): np.int64(1299), np.str_('esp'): np.int64(862), np.str_('hin'): np.int64(686)}
+Client sizes: [3300, 4789, 3461, 8990, 4372]
+
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 199/199 [00:00<00:00, 5527.19it/s]
+[transformers] [1mXLMRobertaModel LOAD REPORT[0m from: xlm-roberta-base
+Key                       | Status     |  |
+--------------------------+------------+--+-
+lm_head.layer_norm.weight | UNEXPECTED |  |
+lm_head.dense.bias        | UNEXPECTED |  |
+lm_head.layer_norm.bias   | UNEXPECTED |  |
+lm_head.dense.weight      | UNEXPECTED |  |
+lm_head.bias              | UNEXPECTED |  |
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+trainable params: 5,357,568 || all params: 283,401,216 || trainable%: 1.8905
+Shared init: LoRA-A matrices orthonormal initialized
+[Checkpoint] None found. Starting fresh.
+[VRAM] Reset | Initial: 1.13 GB
+
+============================================================
+ROUND 1/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.4220, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.2937, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.3546, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.3417, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.3252, eps=None
+
+Round 1 done in 445.1s
+  Val:  macro=0.2418, micro=0.2697
+[Checkpoint] Round 0 saved
+
+============================================================
+ROUND 2/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.2344, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.2176, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.2562, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.2526, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.2156, eps=None
+
+Round 2 done in 443.4s
+  Val:  macro=0.7268, micro=0.7328
+[Checkpoint] Round 1 saved
+
+============================================================
+ROUND 3/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1909, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.1803, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.2196, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.2058, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.1775, eps=None
+
+Round 3 done in 443.8s
+  Val:  macro=0.7509, micro=0.7553
+[Checkpoint] Round 2 saved
+
+============================================================
+ROUND 4/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1750, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.1557, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.1931, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.1725, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.1569, eps=None
+
+Round 4 done in 444.8s
+  Val:  macro=0.7737, micro=0.7778
+[Checkpoint] Round 3 saved
+
+============================================================
+ROUND 5/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1501, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.1355, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.1716, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.1430, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.1374, eps=None
+
+Round 5 done in 445.2s
+  Val:  macro=0.7910, micro=0.7948
+[Checkpoint] Round 4 saved
+
+============================================================
+ROUND 6/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1391, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.1211, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.1534, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.1212, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.1190, eps=None
+
+Round 6 done in 451.7s
+  Val:  macro=0.7976, micro=0.8012
+[Checkpoint] Round 5 saved
+
+============================================================
+ROUND 7/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1286, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.1056, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.1418, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.1039, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.1073, eps=None
+
+Round 7 done in 445.0s
+  Val:  macro=0.7987, micro=0.8008
+[Checkpoint] Round 6 saved
+
+============================================================
+ROUND 8/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1152, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.0960, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.1279, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.0917, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.0979, eps=None
+
+Round 8 done in 445.2s
+  Val:  macro=0.8154, micro=0.8188
+[Checkpoint] Round 7 saved
+
+============================================================
+ROUND 9/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1092, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.0862, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.1205, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.0801, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.0897, eps=None
+
+Round 9 done in 442.5s
+  Val:  macro=0.8133, micro=0.8165
+[Checkpoint] Round 8 saved
+
+============================================================
+ROUND 10/10
+============================================================
+Pooler frozen: 2 params (unused in forward)
+  Client 0: n=3300, loss=0.1069, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 1: n=4789, loss=0.0785, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 2: n=3461, loss=0.1099, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 3: n=8990, loss=0.0725, eps=None
+Pooler frozen: 2 params (unused in forward)
+  Client 4: n=4372, loss=0.0827, eps=None
+
+Round 10 done in 447.4s
+  Val:  macro=0.8163, micro=0.8193
+[Checkpoint] Round 9 saved
+
+[Final test — evaluated once after training]
+  Macro-F1: 0.8230
+  Micro-F1: 0.8238
+  JSON: /content/paper3_fedavg_10r_seed42_20261009_133222/checkpoints/../results/fedavg_10r_seed42_finalprotocol_20261009_133222_final_test.json
+  CSV:  /content/paper3_fedavg_10r_seed42_20261009_133222/checkpoints/../results/fedavg_10r_seed42_finalprotocol_20261009_133222_final_test.csv
+Per-round validation metrics: /content/paper3_fedavg_10r_seed42_20261009_133222/checkpoints/../results/fedavg_10r_seed42_finalprotocol_20261009_133222_metrics.csv
+[VRAM] Peak allocated: 8.84 GB
+[VRAM] Peak reserved:  9.03 GB
+PAPER 3 TRAINING COMPLETE!

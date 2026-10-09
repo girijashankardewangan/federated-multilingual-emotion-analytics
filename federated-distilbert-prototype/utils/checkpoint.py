@@ -1,4 +1,5 @@
-import os, json, torch
+import os, json, torch, random
+import numpy as np
 from datetime import datetime
 
 
@@ -33,8 +34,20 @@ class CheckpointManager:
         return os.path.join(self.checkpoint_dir, f"{self.experiment_name}_history.json")
 
     def save(self, round_num, model, optimizer=None, fairbatch=None, metrics=None):
-        state = {"round": round_num, "timestamp": datetime.now().isoformat(),
-                 "model_state_dict": model.state_dict()}
+        state = {
+            "round": round_num,
+            "timestamp": datetime.now().isoformat(),
+            "model_state_dict": model.state_dict(),
+            "rng_state": {
+                "python": random.getstate(),
+                "numpy": np.random.get_state(),
+                "torch_cpu": torch.get_rng_state(),
+                "torch_cuda": (
+                    torch.cuda.get_rng_state_all()
+                    if torch.cuda.is_available() else None
+                ),
+            },
+        }
         if optimizer is not None:
             state["optimizer_state_dict"] = optimizer.state_dict()
         if fairbatch is not None:
@@ -56,6 +69,43 @@ class CheckpointManager:
             return None
         print(f"[Checkpoint] Loading: {path}", flush=True)
         return torch.load(path, map_location="cpu", weights_only=False)
+
+    def restore_rng_state(self, checkpoint_state):
+        """Restore RNG after model/data setup, before next training round."""
+        rng = (
+            checkpoint_state.get("rng_state")
+            if checkpoint_state is not None else None
+        )
+        required = {"python", "numpy", "torch_cpu"}
+        if not rng or not required.issubset(rng):
+            print(
+                "[Checkpoint] RNG state absent/incomplete; "
+                "exact resume is not guaranteed.",
+                flush=True,
+            )
+            return False
+
+        try:
+            random.setstate(rng["python"])
+            np.random.set_state(rng["numpy"])
+            torch.set_rng_state(rng["torch_cpu"])
+
+            cuda_states = rng.get("torch_cuda")
+            if torch.cuda.is_available():
+                if cuda_states is None:
+                    print(
+                        "[Checkpoint] CUDA RNG state unavailable; "
+                        "GPU randomness may not reproduce exactly.",
+                        flush=True,
+                    )
+                else:
+                    torch.cuda.set_rng_state_all(cuda_states)
+
+            print("[Checkpoint] RNG state restored.", flush=True)
+            return True
+        except Exception as exc:
+            print(f"[Checkpoint] RNG restore failed: {exc}", flush=True)
+            return False
 
     def _append_history(self, round_num, metrics):
         path = self._history_path()
