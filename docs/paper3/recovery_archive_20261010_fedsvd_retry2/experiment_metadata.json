@@ -1,0 +1,18 @@
+{
+  "experiment": "fedsvd_10r_seed42_compact_20261010_retry2",
+  "method": "FedSVD + LoRA",
+  "base_model": "xlm-roberta-base",
+  "rounds": 10,
+  "seed": 42,
+  "split_seed": 42,
+  "partition_seed": 42,
+  "lora_r": 32,
+  "lora_alpha": 64,
+  "torch": "2.11.0+cu130",
+  "torchao": "0.17.0+cu130",
+  "opacus": "1.6.0",
+  "differential_privacy_enabled": false,
+  "checkpoint_format": "trainable_only_v1",
+  "git_branch": "paper3-archive-20261009_161248",
+  "git_commit": "d73dcc3deb528eb32f3765bbc338b4e2c01d4701"
+}

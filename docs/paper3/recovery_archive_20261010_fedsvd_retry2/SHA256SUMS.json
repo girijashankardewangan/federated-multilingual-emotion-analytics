@@ -1,0 +1,22 @@
+{
+  "README.md": "14df758e7e01c968098f46d067c68c1a2a846b4006eebdaca282396aea85d576",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_history.json": "746851e5d1b63651f430b2cd0a0cdc77b2da0e22c9d6ff3eda1f94947e536555",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_latest.pt": "e2610f8f0893b7d21b2fd1cb635dc423f82c45cc8127798a77bb6656e8462418",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0000.pt": "19f4ffe5563a6c818172caf2212b3458d5c4f6ac58909af4af7d6d63edd00bb7",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0001.pt": "1c975d4f7b3debab65faaf60f82a6145383e9582579b50908c9d916acb3044ce",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0002.pt": "3b85ea691b338b31d43d3415a656e39f76227e743430dbe68037b77e15b71516",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0003.pt": "5aa11c9df660775b24c9bd2cfb4214a55c0a283d29472ea91276bd0f1d71fbd9",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0004.pt": "51694f3a5141f832655c116ed1dc76d1383d1ad11a9a2df8485f765a219d0910",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0005.pt": "38ef041f148b526851d0c76d47992c5430fafc99b311a9334772693e45aaf410",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0006.pt": "e350b8f8b6216891138a8147c868898103a140b434f4d2743c5e388709cdfa65",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0007.pt": "84a4059ca49302f166466192ac1252919c41ae3ae45d8cba028ab369f3728272",
+  "checkpoints/fedsvd_10r_seed42_compact_20261010_retry2_round_0008.pt": "b443f0aa4d7e8b7b52b208a4b7ded4cd143ba42be50f9b91f5d4b2164db1e400",
+  "environment.json": "5f90855b964988a235c635a39e83ab8cfd97e7c396b99ee592d1b4751f245c2e",
+  "evidence/fedsvd_10r_seed42_compact_20261010_retry2_final_test.csv": "fba3d5b641728cfaae33c1d5f2899b8fe36a8c768bcdc15f963c92927016f9e2",
+  "evidence/fedsvd_10r_seed42_compact_20261010_retry2_final_test.json": "1d51f05dcfaa6c465d8f2fb24da8329d272b8dd7a8f61e744ac81c7e941e0425",
+  "evidence/fedsvd_10r_seed42_compact_20261010_retry2_metrics.csv": "c30384c8ba880993fb98a9106e948cd007ad72f210d76aa256185fd08e7dd46e",
+  "evidence/training.log": "56c847a152461a36facad7fe082ada07173a749e7e27ee26c566369c2767c5d0",
+  "experiment_metadata.json": "22fd66b9f047232723a8fc304002d51db0d15f13eed4a156accdca89a020eb67",
+  "source_snapshot/run_paper3.py": "8ddfd0e17cc42e6dfb8cadd9533318e6d610b9534be27403282a76e9116f2fdc",
+  "source_snapshot/utils/checkpoint.py": "ef4115691460c1e1fb55e5761cb2ab06218003028bf7374903d8b151c7616dc3"
+}
